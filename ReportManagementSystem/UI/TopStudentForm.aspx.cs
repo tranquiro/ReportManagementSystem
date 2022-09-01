@@ -117,7 +117,7 @@ namespace ReportManagementSystem.UI
             //グループアイコン・グループラベルの表示
             IcnGroup.Visible = true;
             LblGroupName.Visible = true;
-            LblGroupName.Text = (string)Session["グループ名"];
+            LblGroupName.Text = (string)Session["グループ名"] + "グループ";
 
             //存在エラーラベルの非表示
             LblExistErr.Visible = false;

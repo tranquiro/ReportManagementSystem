@@ -227,5 +227,30 @@ namespace ReportManagementSystem.DataBase
             DataTable dt = DataBaseLogic.DataBaseUnit(sbSql, paramId);
             return dt;
         }
+
+        /// <summary>
+        /// レポート詳細データ取得
+        /// </summary>
+        public static DataTable GetReportDetailData(int reportid)
+        {
+            StringBuilder sbSql = new StringBuilder();
+
+            sbSql.AppendLine("SELECT    ");
+            sbSql.AppendLine("   レポート情報.課題種別 ");
+            sbSql.AppendLine("  ,レポート情報.提出期限日 ");
+            sbSql.AppendLine("  ,レポート情報.レポート概要 ");
+            sbSql.AppendLine("  ,レポート情報.レポート内容 ");
+            sbSql.AppendLine("FROM ");
+            sbSql.AppendLine("  レポート情報");
+            sbSql.AppendLine("WHERE ");
+            sbSql.AppendLine("  レポート情報.レポートID = @REPORTID  ");
+            SqlParameter paramId = new SqlParameter("REPORTID", reportid);
+            sbSql.AppendLine("AND ");
+            sbSql.AppendLine(" レポート情報.削除フラグ　= 0 ");
+
+            //データ取得
+            DataTable dt = DataBaseLogic.DataBaseUnit(sbSql, paramId);
+            return dt;
+        }
     }
 }
