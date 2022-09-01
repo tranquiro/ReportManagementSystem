@@ -82,5 +82,12 @@ namespace ReportManagementSystem
                 Response.Redirect("TopAdministratorForm.aspx");
             }
         }
+
+        //パスワード初期化リンク押下時
+        protected void LnkBtnPassword_Click(object sender, EventArgs e)
+        {
+            //画面遷移
+            Response.Redirect("InitializationForm.aspx");
+        }
     }
 }

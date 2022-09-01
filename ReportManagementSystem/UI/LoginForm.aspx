@@ -60,7 +60,7 @@
         </div>
 
         <div id="forget">
-            <asp:LinkButton ID="LnkBtnPassword" runat="server">パスワードをお忘れですか？</asp:LinkButton>
+            <asp:LinkButton ID="LnkBtnPassword" runat="server" OnClick="LnkBtnPassword_Click">パスワードをお忘れですか？</asp:LinkButton>
         </div>
 
     </form>

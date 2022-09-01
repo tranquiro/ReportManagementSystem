@@ -75,6 +75,7 @@
     <Content Include="Image\一覧リンク.png" />
     <Content Include="Image\提出.png" />
     <Content Include="Image\未提出.png" />
+    <Content Include="UI\InitializationForm.aspx" />
     <Content Include="UI\LoginForm.aspx" />
     <Content Include="UI\NewReportForm.aspx" />
     <Content Include="UI\ReportDetailForm.aspx" />
@@ -86,6 +87,13 @@
   <ItemGroup>
     <Compile Include="DataBase\DataBaseLogic.cs" />
     <Compile Include="DataBase\DataBaseSql.cs" />
+    <Compile Include="UI\InitializationForm.aspx.cs">
+      <DependentUpon>InitializationForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UI\InitializationForm.aspx.designer.cs">
+      <DependentUpon>InitializationForm.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UI\LoginForm.aspx.cs">
       <DependentUpon>LoginForm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
