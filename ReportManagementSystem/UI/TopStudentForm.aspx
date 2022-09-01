@@ -36,7 +36,7 @@
             <br />
         </div>
         <div>
-            <asp:GridView ID="GrdReport" runat="server" AutoGenerateColumns="False" Height="100px" Width="473px" AllowPaging="true" PageSize="20">
+            <asp:GridView ID="GrdReport" runat="server" AutoGenerateColumns="False" Height="100px" Width="473px" AllowPaging="true" PageSize="20" CellPadding="4">
                 <Columns>
                     <asp:TemplateField>
                         <ItemTemplate>
@@ -46,6 +46,7 @@
                     <asp:BoundField DataField="提出期限" HeaderText="提出期限" />
                     <asp:HyperLinkField DataNavigateUrlFields="レポートID" DataNavigateUrlFormatString="~/UI/ReportDetailForm.aspx?ReportId={0}" HeaderText="レポート概要" DataTextField="レポート概要" />
                 </Columns>
+                <RowStyle HorizontalAlign ="Center" />
             </asp:GridView>
 
             <asp:ObjectDataSource ID="personal_dt" runat="server"></asp:ObjectDataSource>

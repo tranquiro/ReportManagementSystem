@@ -4,47 +4,63 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
+    <style>
+        #title {
+            display:flex;
+            align-items: center; /* 垂直方向 */
+        }
+
+        .item{
+            display:flex;
+        }
+
+        #login{
+            margin-left:250px;
+        }
+
+        #forget{
+            margin-left: 50px;
+            margin-top:15px;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div id ="title">
             <asp:Image ID="Image1" runat="server" ImageUrl="~/Image/タイトル.png" />
-            <asp:Label ID="LblTitle" runat="server" Text="レポート管理システム"></asp:Label>
+            <asp:Label ID="LblTitle" runat="server" Text="レポート管理システム" Font-Size="Larger"></asp:Label>
         </div>
-        <div>
 
-            <br />
+        <p>
             <asp:Label ID="LblLogin" runat="server" Text="ログイン"></asp:Label>
+        </p>
 
+        <div class ="item">
+            <asp:Image ID="IcnUserId" runat="server" ImageUrl="~/Image/ユーザーID.png" Height="40px" Width="40px" />
+            <asp:TextBox ID="TxtUserId" Placeholder="ユーザーID（Email）" runat="server"></asp:TextBox>
         </div>
-        <div>
 
-            <asp:Image ID="IcnUserId" runat="server" ImageUrl="~/Image/ユーザーID.png" />
-            <asp:TextBox ID="TxtUserId" Placeholder ="ユーザーID（Email）" runat="server"></asp:TextBox>
-            <br />
+        <p>
             <asp:Label ID="LblUserIdErr" runat="server" ForeColor="Red" Text="ユーザーIDが未入力です"></asp:Label>
-        
-        </div>
-        <div>
+        </p>
 
-            <asp:Image ID="IcnPassword" runat="server" ImageUrl="~/Image/パスワード.png" />
-            <asp:TextBox ID="TxtPassword" Placeholder ="パスワード" runat="server"></asp:TextBox>
-            <br />
+        <div class ="item">
+            <asp:Image ID="IcnPassword" runat="server" ImageUrl="~/Image/パスワード.png" Height="40px" Width="40px" />
+            <asp:TextBox ID="TxtPassword" Placeholder="パスワード" runat="server"></asp:TextBox>
+        </div>
+
+        <p>
             <asp:Label ID="LblPasswordErr" runat="server" ForeColor="Red" Text="パスワードが未入力です"></asp:Label>
-        
+        </p>
+
+        <div id="login">
+            <asp:Button ID="BtnLogin" runat="server" BackColor="Blue" ForeColor="White" Text="ログイン" OnClick="BtnLogin_Click" Style="margin-left: 0px" />
         </div>
 
-        <div style ="margin-left:300px">
-            <br />
-            <asp:Button ID="BtnLogin" runat="server" BackColor="Blue" ForeColor="White" Text="ログイン" OnClick="BtnLogin_Click" style="margin-left: 0px" />
-
-        </div>
-        <div style ="margin-left:50px">
-            <br />
+        <div id="forget">
             <asp:LinkButton ID="LnkBtnPassword" runat="server">パスワードをお忘れですか？</asp:LinkButton>
-
         </div>
 
     </form>

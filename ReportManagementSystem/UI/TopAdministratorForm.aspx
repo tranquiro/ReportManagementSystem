@@ -44,8 +44,7 @@
         </div>
 
 
-        <asp:GridView ID="GrdReportSummary" runat="server" AutoGenerateColumns="False" AllowPaging ="True" PageSize ="20" CellPadding="4" ForeColor="#333333" GridLines="None">
-            <AlternatingRowStyle BackColor="White" />
+        <asp:GridView ID="GrdReportSummary" runat="server" AutoGenerateColumns="False" AllowPaging ="True" PageSize ="20" CellPadding="4">
             <Columns>
                 <asp:BoundField DataField="レポートID" HeaderText="レポートID" Visible="False" />
                 <asp:BoundField DataField="提出期限" HeaderText="提出期限" />
@@ -53,16 +52,7 @@
                 <asp:BoundField DataField="課題種別" HeaderText="課題種別" />
                 <asp:HyperLinkField DataNavigateUrlFields="レポートID" DataNavigateUrlFormatString="~/UI/SubmissionsForm.aspx?ReportId={0}" DataTextField="提出一覧" HeaderText="提出一覧" />
             </Columns>
-            <EditRowStyle BackColor="#2461BF" />
-            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-            <RowStyle BackColor="#EFF3FB" />
-            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-            <SortedAscendingCellStyle BackColor="#F5F7FB" />
-            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-            <SortedDescendingCellStyle BackColor="#E9EBEF" />
-            <SortedDescendingHeaderStyle BackColor="#4870BE" />
+            <RowStyle HorizontalAlign ="Center" />
         </asp:GridView>
 
     </form>
