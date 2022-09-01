@@ -11,7 +11,8 @@ namespace ReportManagementSystem.UI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            int reportId = Convert.ToInt32(Request.QueryString["ReportId"]);
+            Label1.Text = "レポート"+reportId + "の一覧画面です。";
         }
     }
 }

@@ -10,7 +10,9 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            提出一覧画面</div>
+            提出一覧画面
+        </div>
+        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     </form>
 </body>
 </html>

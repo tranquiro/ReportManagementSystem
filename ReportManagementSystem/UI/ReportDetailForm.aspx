@@ -11,8 +11,10 @@
     <form id="form1" runat="server">
         <div>
             レポート詳細画面<br />
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
             <br />
             制作中</div>
     </form>
+    
 </body>
 </html>

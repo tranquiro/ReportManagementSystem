@@ -8,6 +8,7 @@ namespace ReportManagementSystem
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //ユーザーIDエラーラベル、パスワードエラーラベルの非表示
             LblUserIdErr.Visible = false;
             LblPasswordErr.Visible = false;
         }
