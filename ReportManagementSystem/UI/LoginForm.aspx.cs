@@ -10,7 +10,6 @@ namespace ReportManagementSystem
         {
             LblUserIdErr.Visible = false;
             LblPasswordErr.Visible = false;
-
         }
 
         //ログインボタン押下時

@@ -48,7 +48,7 @@
 
         <div class ="item">
             <asp:Image ID="IcnPassword" runat="server" ImageUrl="~/Image/パスワード.png" Height="40px" Width="40px" />
-            <asp:TextBox ID="TxtPassword" Placeholder="パスワード" runat="server"></asp:TextBox>
+            <asp:TextBox ID="TxtPassword" TextMode="Password" Placeholder="パスワード" runat="server"></asp:TextBox>
         </div>
 
         <p>
