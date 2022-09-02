@@ -11,6 +11,7 @@ using ReportManagementSystem.DataBase;
 
 namespace ReportManagementSystem.UI
 {
+    //学生用Top画面
     public partial class TopStudentForm : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -18,7 +19,7 @@ namespace ReportManagementSystem.UI
             //ユーザーアイコン・ユーザーラベルの表示
             IcnUser.Visible = true;
             LblUserName.Visible = true;
-            LblUserName.Text = (string)Session["ユーザー名"] + "　様";
+            LblUserName.Text = (string)Session["USERNAME"] + "　様";
 
             //グループアイコン・グループラベルの非表示
             IcnGroup.Visible = false;
@@ -47,7 +48,7 @@ namespace ReportManagementSystem.UI
             //ユーザーアイコン・ユーザーラベルの表示
             IcnUser.Visible = true;
             LblUserName.Visible = true;
-            LblUserName.Text = (string)Session["ユーザー名"] + "　様";
+            LblUserName.Text = (string)Session["UserName"] + "　様";
 
             //グループアイコン・グループラベルの非表示
             IcnGroup.Visible = false;
@@ -60,7 +61,7 @@ namespace ReportManagementSystem.UI
             GrdReport.Visible = true;
 
             //レポート提出状況のチェック
-            DataTable dt = DataBaseSql.GetPersonalReport((int)Session["ユーザーID"]);
+            DataTable dt = DataBaseSql.GetPersonalReport((int)Session["UserId"]);
             
             //検索結果が0件の場合
             if (dt.Rows.Count == 0)
@@ -73,29 +74,40 @@ namespace ReportManagementSystem.UI
             //レポート提出状況表示テーブル
             DataTable personal_dt = new DataTable();
 
-            personal_dt.Columns.Add("レポートID");
-            personal_dt.Columns.Add("提出状態");
-            personal_dt.Columns.Add("提出期限");
-            personal_dt.Columns.Add("レポート概要");
+            //列追加
+            personal_dt.Columns.Add("ReportId");
+            personal_dt.Columns.Add("SubmissionStatus");
+            personal_dt.Columns.Add("SubmissionDeadline");
+            personal_dt.Columns.Add("ReportSummary");
 
+            //行回数文ループ
             for (int i = 0; i < dt.Rows.Count; i++)
             {
+                //行作成
                 DataRow row;
                 row = personal_dt.NewRow();
 
-                row["レポートID"] = dt.Rows[i][0];
+                //レポートID列
+                row["ReportId"] = dt.Rows[i][0];
 
+                //提出レポートがない場合
                 if (dt.Rows[i][1].Equals(DBNull.Value))
                 {
-                    row["提出状態"] = "~/Image/未提出.png";
+                    //提出状態列
+                    row["SubmissionStatus"] = "~/Image/Unsubmit.png";
                 }
                 else
-                {
-                    row["提出状態"] = "~/Image/提出.png";
+                {　//提出状態列
+                    row["SubmissionStatus"] = "~/Image/Submit.png";
                 }
 
-                row["提出期限"] = String.Format("{0:yyyy/MM/dd}", dt.Rows[i][2]);
-                row["レポート概要"] = dt.Rows[i][3];
+                //提出期限列
+                row["SubmissionDeadline"] = String.Format("{0:yyyy/MM/dd}", dt.Rows[i][2]);
+
+                //レポート概要列
+                row["ReportSummary"] = dt.Rows[i][3];
+
+                //行追加
                 personal_dt.Rows.Add(row);
             }
 
@@ -117,7 +129,7 @@ namespace ReportManagementSystem.UI
             //グループアイコン・グループラベルの表示
             IcnGroup.Visible = true;
             LblGroupName.Visible = true;
-            LblGroupName.Text = (string)Session["グループ名"] + "グループ";
+            LblGroupName.Text = (string)Session["GroupName"] + "グループ";
 
             //存在エラーラベルの非表示
             LblExistErr.Visible = false;
@@ -126,7 +138,7 @@ namespace ReportManagementSystem.UI
             GrdReport.Visible = true;
 
             //レポート提出状況のチェック
-            DataTable dt = DataBaseSql.GetGroupReport((int)Session["グループID"]);
+            DataTable dt = DataBaseSql.GetGroupReport((int)Session["GroupId"]);
 
             //検索結果が0件の場合
             if (dt.Rows.Count == 0)
@@ -139,30 +151,41 @@ namespace ReportManagementSystem.UI
             //レポート提出状況表示テーブル
             DataTable group_dt = new DataTable();
 
-            group_dt.Columns.Add("レポートID");
-            group_dt.Columns.Add("提出状態");
-            group_dt.Columns.Add("提出期限");
-            group_dt.Columns.Add("レポート概要");
+            //列追加
+            group_dt.Columns.Add("ReportId");
+            group_dt.Columns.Add("SubmissionStatus");
+            group_dt.Columns.Add("SubmissionDeadline");
+            group_dt.Columns.Add("ReportSummary");
 
+            //行回数文ループ
             for (int i = 0; i < dt.Rows.Count; i++)
             {
+                //行作成
                 DataRow row;
                 row = group_dt.NewRow();
 
-                row["レポートID"] = dt.Rows[i][0];
+                //レポートID列
+                row["ReportId"] = dt.Rows[i][0];
 
-
+                //提出レポートがない場合
                 if (dt.Rows[i][1].Equals(DBNull.Value))
                 {
-                    row["提出状態"] = "~/Image/未提出.png";
+                    //提出状態列
+                    row["SubmissionStatus"] = "~/Image/Unsubmit.png";
                 }
                 else
                 {
-                    row["提出状態"] = "~/Image/提出.png";
+                    //提出状態列
+                    row["SubmissionStatus"] = "~/Image/Submit.png";
                 }
 
-                row["提出期限"] = String.Format("{0:yyyy/MM/dd}", dt.Rows[i][2]);
-                row["レポート概要"] = dt.Rows[i][3];
+                //提出期限列
+                row["SubmissionDeadline"] = String.Format("{0:yyyy/MM/dd}", dt.Rows[i][2]);
+
+                //レポート概要列
+                row["ReportSummary"] = dt.Rows[i][3];
+
+                //行追加
                 group_dt.Rows.Add(row);
             }
 

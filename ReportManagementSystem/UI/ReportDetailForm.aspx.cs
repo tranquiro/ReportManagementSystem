@@ -9,6 +9,7 @@ using ReportManagementSystem.DataBase;
 
 namespace ReportManagementSystem.UI
 {
+    //レポート詳細画面
     public partial class ReportDetailForm : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -23,7 +24,7 @@ namespace ReportManagementSystem.UI
             {
                 IcnGroup.Visible = false;
                 LblGroupName.Visible = false;
-                LblUserName.Text = (string)Session["ユーザー名"] + "　様";
+                LblUserName.Text = (string)Session["UserName"] + "　様";
             }
 
             //グループ課題の時
@@ -31,7 +32,7 @@ namespace ReportManagementSystem.UI
             {
                 IcnUser.Visible = false;
                 LblUserName.Visible = false;
-                LblGroupName.Text = (string)Session["グループ名"] +"グループ";
+                LblGroupName.Text = (string)Session["GroupName"] +"グループ";
             }
 
             //提出期限日の表示
@@ -43,7 +44,7 @@ namespace ReportManagementSystem.UI
 
             //表示項目設定
             //学生の場合
-            if(Convert.ToInt32(Session["管理者フラグ"]) == 0)
+            if(Convert.ToInt32(Session["AdaministratorFlag"]) == 0)
             {
                 BtnAcquisition.Visible = true;
                 LblSubmitReport.Visible = true;
@@ -55,7 +56,7 @@ namespace ReportManagementSystem.UI
             }
 
             //管理者の場合
-            if (Convert.ToInt32(Session["管理者フラグ"]) == 1)
+            if (Convert.ToInt32(Session["AdaministratorFlag"]) == 1)
             {
                 BtnAcquisition.Visible = false;
                 LblSubmitReport.Visible = false;

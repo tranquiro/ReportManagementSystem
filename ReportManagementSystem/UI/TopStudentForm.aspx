@@ -10,6 +10,7 @@
 <body>
     <form id="form1" runat="server">
         <div style="text-align: right;">
+
             <!-- ログアウト確認表示 -->
             <asp:LinkButton ID="LnkLogOut" runat="server" OnClick="LnkLogOut_Click" OnClientClick="return confirm('ログアウトしますか？');">ログアウト</asp:LinkButton>
         </div>
@@ -18,12 +19,12 @@
         </div>
         <div>
             <p style="text-align: right;">
-                <asp:Image ID="IcnUser" runat="server" ImageUrl="~/Image/ユーザーID.png" />
+                <asp:Image ID="IcnUser" runat="server" ImageUrl="~/Image/Userid.png" />
                 <br />
                 <asp:Label ID="LblUserName" runat="server"></asp:Label>
             </p>
             <p style="text-align: right;">
-                <asp:Image ID="IcnGroup" runat="server" ImageUrl="~/Image/グループ.png" />
+                <asp:Image ID="IcnGroup" runat="server" ImageUrl="~/Image/Group.png" />
                 <br />
                 <asp:Label ID="LblGroupName" runat="server"></asp:Label>
             </p>
@@ -36,21 +37,27 @@
             <br />
         </div>
         <div>
+            <!-- ペーシング20行 -->
             <asp:GridView ID="GrdReport" runat="server" AutoGenerateColumns="False" Height="100px" Width="473px" AllowPaging="true" PageSize="20" CellPadding="4">
                 <Columns>
+
                     <asp:TemplateField>
                         <ItemTemplate>
-                            &nbsp;<asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("提出状態") %>' />
+                            <!-- 提出状態を画像表示 -->
+                            &nbsp;<asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("SubmissionStatus") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:BoundField DataField="提出期限" HeaderText="提出期限" />
-                    <asp:HyperLinkField DataNavigateUrlFields="レポートID" DataNavigateUrlFormatString="~/UI/ReportDetailForm.aspx?ReportId={0}" HeaderText="レポート概要" DataTextField="レポート概要" />
+
+                    <!-- 提出期限を表示 -->
+                    <asp:BoundField DataField="SubmissionDeadline" HeaderText="提出期限" />
+
+                    <!-- レポート概要を表示（リンクにレポートIDを設定） -->
+                    <asp:HyperLinkField DataNavigateUrlFields="ReportId" DataNavigateUrlFormatString="~/UI/ReportDetailForm.aspx?ReportId={0}" HeaderText="レポート概要" DataTextField="ReportSummary" />
                 </Columns>
                 <RowStyle HorizontalAlign ="Center" />
             </asp:GridView>
 
             <asp:ObjectDataSource ID="personal_dt" runat="server"></asp:ObjectDataSource>
-
         </div>
     </form>
 </body>

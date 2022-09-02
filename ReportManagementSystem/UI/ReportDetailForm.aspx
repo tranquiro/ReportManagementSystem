@@ -18,12 +18,12 @@
         </div>
         <div>
             <p style="text-align: right;">
-                <asp:Image ID="IcnUser" runat="server" ImageUrl="~/Image/ユーザーID.png" />
+                <asp:Image ID="IcnUser" runat="server" ImageUrl="~/Image/UserId.png" />
                 <br />
                 <asp:Label ID="LblUserName" runat="server"></asp:Label>
             </p>
             <p style="text-align: right;">
-                <asp:Image ID="IcnGroup" runat="server" ImageUrl="~/Image/グループ.png" />
+                <asp:Image ID="IcnGroup" runat="server" ImageUrl="~/Image/Group.png" />
                 <br />
                 <asp:Label ID="LblGroupName" runat="server"></asp:Label>
             </p>

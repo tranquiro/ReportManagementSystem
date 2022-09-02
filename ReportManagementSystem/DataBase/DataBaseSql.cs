@@ -19,22 +19,22 @@ namespace ReportManagementSystem.DataBase
         {
             StringBuilder sbSql = new StringBuilder();
             sbSql.AppendLine("SELECT    ");
-            sbSql.AppendLine("   ユーザー情報.ユーザーID ");
-            sbSql.AppendLine("  ,ユーザー情報.ユーザー名 ");
-            sbSql.AppendLine("  ,ユーザー情報.管理者フラグ ");
-            sbSql.AppendLine("  ,ユーザー情報.パスワード ");
-            sbSql.AppendLine("  ,グループ情報.グループID");
-            sbSql.AppendLine("  ,グループ情報.グループ名");
+            sbSql.AppendLine("   UserInfo.UserId ");
+            sbSql.AppendLine("  ,UserInfo.UserName ");
+            sbSql.AppendLine("  ,UserInfo.AdministratorFlag ");
+            sbSql.AppendLine("  ,UserInfo.Password ");
+            sbSql.AppendLine("  ,GroupInfo.GroupId");
+            sbSql.AppendLine("  ,GroupInfo.GroupName");
             sbSql.AppendLine("FROM ");
-            sbSql.AppendLine("  ユーザー情報");
-            sbSql.AppendLine("LEFT OUTER JOIN グループ情報");
+            sbSql.AppendLine("  UserInfo");
+            sbSql.AppendLine("LEFT OUTER JOIN GroupInfo");
             sbSql.AppendLine("ON ");
-            sbSql.AppendLine("ユーザー情報.グループID= グループ情報.グループID");
+            sbSql.AppendLine("UserInfo.GroupId= GroupInfo.GroupId");
             sbSql.AppendLine("WHERE ");
-            sbSql.AppendLine("  ユーザー情報.メールアドレス　= @USERID ");
+            sbSql.AppendLine("  UserInfo.MailAddress　= @USERID ");
             SqlParameter paramId = new SqlParameter("USERID", txtuserid);
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine("  ユーザー情報.削除フラグ　= 0 ");
+            sbSql.AppendLine("  UserInfo.DeleteFlag　= 0 ");
 
             //データ取得
             DataTable dt = DataBaseLogic.DataBaseUnit(sbSql, paramId);
@@ -49,35 +49,35 @@ namespace ReportManagementSystem.DataBase
             StringBuilder sbSql = new StringBuilder();
 
             sbSql.AppendLine("SELECT    ");
-            sbSql.AppendLine("   レポート情報.レポートID ");
-            sbSql.AppendLine("  ,提出情報.登録日時 ");
-            sbSql.AppendLine("  ,レポート情報.提出期限日 ");
-            sbSql.AppendLine("  ,レポート情報.レポート概要 ");
+            sbSql.AppendLine("   ReportInfo.ReportId ");
+            sbSql.AppendLine("  ,SubmissionInfo.CreateDatetime ");
+            sbSql.AppendLine("  ,ReportInfo.SubmissionDeadline ");
+            sbSql.AppendLine("  ,ReportInfo.ReportSummary ");
             sbSql.AppendLine("FROM ");
-            sbSql.AppendLine("  レポート情報");
-            sbSql.AppendLine("INNER JOIN 講義情報");
+            sbSql.AppendLine("  ReportInfo");
+            sbSql.AppendLine("INNER JOIN LectureInfo");
             sbSql.AppendLine("ON ");
-            sbSql.AppendLine("レポート情報.講義ID= 講義情報.講義ID");
-            sbSql.AppendLine("INNER JOIN 受講情報");
+            sbSql.AppendLine("ReportInfo.LectureId= LectureInfo.LectureId");
+            sbSql.AppendLine("INNER JOIN AttendInfo");
             sbSql.AppendLine("ON ");
-            sbSql.AppendLine("講義情報.講義ID= 受講情報.講義ID");
-            sbSql.AppendLine("INNER JOIN ユーザー情報");
+            sbSql.AppendLine("LectureInfo.LectureId= AttendInfo.LectureId");
+            sbSql.AppendLine("INNER JOIN UserInfo");
             sbSql.AppendLine("ON ");
-            sbSql.AppendLine("受講情報.ユーザーID= ユーザー情報.ユーザーID");
-            sbSql.AppendLine("LEFT OUTER JOIN 提出情報");
+            sbSql.AppendLine("AttendInfo.UserId= UserInfo.UserId");
+            sbSql.AppendLine("LEFT OUTER JOIN SubmissionInfo");
             sbSql.AppendLine("ON ");
-            sbSql.AppendLine("レポート情報.レポートID= 提出情報.レポートID");
+            sbSql.AppendLine("ReportInfo.ReportId= SubmissionInfo.ReportId");
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine("ユーザー情報.ユーザーID= 提出情報.ユーザーID");
+            sbSql.AppendLine("UserInfo.UserId= SubmissionInfo.UserId");
             sbSql.AppendLine("WHERE ");
-            sbSql.AppendLine("  レポート情報.提出期限日　>= GetDate() ");
+            sbSql.AppendLine("  ReportInfo.SubmissionDeadline　>= GetDate() ");
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine("  レポート情報.課題種別 = 0 ");
+            sbSql.AppendLine("  ReportInfo.LectureType = 0 ");
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine("  受講情報.ユーザーID = @USERID  ");
+            sbSql.AppendLine("  AttendInfo.UserId = @USERID  ");
             SqlParameter paramId = new SqlParameter("USERID", userid);
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine("  レポート情報.削除フラグ　= 0 ");
+            sbSql.AppendLine("  ReportInfo.DeleteFlag　= 0 ");
 
             //データ取得
             DataTable dt = DataBaseLogic.DataBaseUnit(sbSql, paramId);
@@ -91,63 +91,63 @@ namespace ReportManagementSystem.DataBase
         {
             StringBuilder sbSql = new StringBuilder();
 
-            sbSql.AppendLine("WITH 提出レポート as(");
+            sbSql.AppendLine("WITH SubmitReport as(");
             sbSql.AppendLine("SELECT    ");
-            sbSql.AppendLine("   レポート情報.レポートID ");
-            sbSql.AppendLine("  ,提出情報.登録日時 ");
-            sbSql.AppendLine("  ,レポート情報.提出期限日 ");
-            sbSql.AppendLine("  ,レポート情報.レポート概要 ");
+            sbSql.AppendLine("   ReportInfo.ReportId ");
+            sbSql.AppendLine("  ,SubmissionInfo.CreateDatetime ");
+            sbSql.AppendLine("  ,ReportInfo.SubmissionDeadline ");
+            sbSql.AppendLine("  ,ReportInfo.ReportSummary ");
             sbSql.AppendLine("FROM ");
-            sbSql.AppendLine("  レポート情報");
-            sbSql.AppendLine("LEFT OUTER JOIN 提出情報");
+            sbSql.AppendLine("  ReportInfo");
+            sbSql.AppendLine("LEFT OUTER JOIN SubmissionInfo");
             sbSql.AppendLine("ON ");
-            sbSql.AppendLine("  レポート情報.レポートID = 提出情報.レポートID");
-            sbSql.AppendLine("WHERE レポート情報.講義ID");
+            sbSql.AppendLine("  ReportInfo.ReportId = SubmissionInfo.ReportId");
+            sbSql.AppendLine("WHERE ReportInfo.LectureId");
             sbSql.AppendLine("    in ( ");
             sbSql.AppendLine("       SELECT");
-            sbSql.AppendLine("           受講情報.講義ID");
+            sbSql.AppendLine("           AttendInfo.LectureId");
             sbSql.AppendLine("       FROM ");
-            sbSql.AppendLine("           ユーザー情報");
-            sbSql.AppendLine("       INNER JOIN 受講情報");
+            sbSql.AppendLine("           UserInfo");
+            sbSql.AppendLine("       INNER JOIN AttendInfo");
             sbSql.AppendLine("       ON ");
-            sbSql.AppendLine("           ユーザー情報.ユーザーID= 受講情報.ユーザーID");
+            sbSql.AppendLine("           UserInfo.UserId= AttendInfo.UserId");
             sbSql.AppendLine("WHERE ");
-            sbSql.AppendLine("  ユーザー情報.管理者フラグ = 0 ");
+            sbSql.AppendLine("  UserInfo.AdministratorFlag = 0 ");
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine("  ユーザー情報.グループID =  @GROUPID ");
+            sbSql.AppendLine("  UserInfo.GroupId =  @GROUPID ");
             SqlParameter paramId = new SqlParameter("GROUPID", groupid);
             sbSql.AppendLine("GROUP BY ");
-            sbSql.AppendLine("  受講情報.講義ID) ");
+            sbSql.AppendLine("  AttendInfo.LectureId) ");
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine("  レポート情報.課題種別 = 1 ");
+            sbSql.AppendLine("  ReportInfo.LectureType = 1 ");
             sbSql.AppendLine("GROUP BY ");
-            sbSql.AppendLine("   レポート情報.レポートID ");
-            sbSql.AppendLine("  ,提出情報.登録日時 ");
-            sbSql.AppendLine("  ,レポート情報.提出期限日 ");
-            sbSql.AppendLine("  ,レポート情報.レポート概要) ");
+            sbSql.AppendLine("   ReportInfo.ReportId ");
+            sbSql.AppendLine("  ,SubmissionInfo.CreateDatetime ");
+            sbSql.AppendLine("  ,ReportInfo.SubmissionDeadline ");
+            sbSql.AppendLine("  ,ReportInfo.ReportSummary) ");
 
             sbSql.AppendLine("SELECT    ");
-            sbSql.AppendLine("   a1.レポートID ");
-            sbSql.AppendLine("  ,a2.登録最新日時 ");
-            sbSql.AppendLine("  ,a1.提出期限日 ");
-            sbSql.AppendLine("  ,a1.レポート概要 ");
+            sbSql.AppendLine("   a1.ReportId ");
+            sbSql.AppendLine("  ,a2.CreateNewDatetime ");
+            sbSql.AppendLine("  ,a1.SubmissionDeadline ");
+            sbSql.AppendLine("  ,a1.ReportSummary ");
             sbSql.AppendLine("FROM ");
-            sbSql.AppendLine("  提出レポート as a1");
+            sbSql.AppendLine("  SubmitReport as a1");
             sbSql.AppendLine("INNER JOIN (");
             sbSql.AppendLine("SELECT    ");
-            sbSql.AppendLine("   レポートID ");
-            sbSql.AppendLine("  ,MAX(登録日時) as 登録最新日時 ");
+            sbSql.AppendLine("   ReportId ");
+            sbSql.AppendLine("  ,MAX(CreateDatetime) as CreateNewDatetime");
             sbSql.AppendLine("FROM ");
-            sbSql.AppendLine("  提出レポート");
+            sbSql.AppendLine("  SubmitReport");
             sbSql.AppendLine("GROUP BY");
-            sbSql.AppendLine("  レポートID)as a2 ");
+            sbSql.AppendLine("  ReportId)as a2 ");
             sbSql.AppendLine("ON ");
-            sbSql.AppendLine("  a1.レポートID = a2.レポートID ");
+            sbSql.AppendLine("  a1.ReportId = a2.ReportId ");
             sbSql.AppendLine("GROUP BY");
-            sbSql.AppendLine("   a1.レポートID ");
-            sbSql.AppendLine("  ,a2.登録最新日時 ");
-            sbSql.AppendLine("  ,a1.提出期限日 ");
-            sbSql.AppendLine("  ,a1.レポート概要 ");
+            sbSql.AppendLine("   a1.ReportId ");
+            sbSql.AppendLine("  ,a2.CreateNewDatetime ");
+            sbSql.AppendLine("  ,a1.SubmissionDeadline ");
+            sbSql.AppendLine("  ,a1.ReportSummary ");
 
             //データ取得
             DataTable dt = DataBaseLogic.DataBaseUnit(sbSql, paramId);
@@ -162,18 +162,18 @@ namespace ReportManagementSystem.DataBase
             StringBuilder sbSql = new StringBuilder();
 
             sbSql.AppendLine("SELECT    ");
-            sbSql.AppendLine("   大学情報.大学ID ");
-            sbSql.AppendLine("  ,大学情報.大学名 ");
+            sbSql.AppendLine("   UniversityInfo.UniversityId ");
+            sbSql.AppendLine("  ,UniversityInfo.UniversityName ");
             sbSql.AppendLine("FROM ");
-            sbSql.AppendLine("  大学情報");
-            sbSql.AppendLine("LEFT OUTER JOIN ユーザー情報");
+            sbSql.AppendLine("  UniversityInfo");
+            sbSql.AppendLine("LEFT OUTER JOIN UserInfo");
             sbSql.AppendLine("ON ");
-            sbSql.AppendLine("大学情報.大学ID= ユーザー情報.大学ID");
+            sbSql.AppendLine("UniversityInfo.UniversityId= UserInfo.UniversityId");
             sbSql.AppendLine("WHERE ");
-            sbSql.AppendLine("  ユーザー情報.ユーザーID = @USERID  ");
+            sbSql.AppendLine("  UserInfo.UserId = @USERID  ");
             SqlParameter paramId = new SqlParameter("USERID", userid);
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine("  大学情報.削除フラグ　= 0 ");
+            sbSql.AppendLine("  UniversityInfo.DeleteFlag　= 0 ");
 
             //データ取得
             DataTable dt = DataBaseLogic.DataBaseUnit(sbSql, paramId);
@@ -188,15 +188,15 @@ namespace ReportManagementSystem.DataBase
             StringBuilder sbSql = new StringBuilder();
 
             sbSql.AppendLine("SELECT    ");
-            sbSql.AppendLine("   講義情報.講義ID ");
-            sbSql.AppendLine("  ,講義情報.講義名 ");
+            sbSql.AppendLine("   LectureInfo.LectureId ");
+            sbSql.AppendLine("  ,LectureInfo.LectureName ");
             sbSql.AppendLine("FROM ");
-            sbSql.AppendLine("  講義情報");
+            sbSql.AppendLine("  LectureInfo");
             sbSql.AppendLine("WHERE ");
-            sbSql.AppendLine("  講義情報.大学ID = @UNIVID  ");
+            sbSql.AppendLine("  LectureInfo.UniversityId = @UNIVID  ");
             SqlParameter paramId = new SqlParameter("UNIVID", userid);
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine(" 講義情報.削除フラグ　= 0 ");
+            sbSql.AppendLine(" LectureInfo.DeleteFlag　= 0 ");
 
             //データ取得
             DataTable dt = DataBaseLogic.DataBaseUnit(sbSql, paramId);
@@ -211,17 +211,17 @@ namespace ReportManagementSystem.DataBase
             StringBuilder sbSql = new StringBuilder();
 
             sbSql.AppendLine("SELECT    ");
-            sbSql.AppendLine("   レポート情報.レポートID ");
-            sbSql.AppendLine("  ,レポート情報.提出期限日 ");
-            sbSql.AppendLine("  ,レポート情報.レポート概要 ");
-            sbSql.AppendLine("  ,レポート情報.課題種別 ");
+            sbSql.AppendLine("   ReportInfo.ReportId ");
+            sbSql.AppendLine("  ,ReportInfo.SubmissionDeadline ");
+            sbSql.AppendLine("  ,ReportInfo.ReportSummary ");
+            sbSql.AppendLine("  ,ReportInfo.LectureType ");
             sbSql.AppendLine("FROM ");
-            sbSql.AppendLine("  レポート情報");
+            sbSql.AppendLine("  ReportInfo");
             sbSql.AppendLine("WHERE ");
-            sbSql.AppendLine("  レポート情報.講義ID = @LECID  ");
+            sbSql.AppendLine("  ReportInfo.LectureId = @LECID  ");
             SqlParameter paramId = new SqlParameter("LECID", lecid);
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine(" レポート情報.削除フラグ　= 0 ");
+            sbSql.AppendLine(" ReportInfo.DeleteFlag　= 0 ");
 
             //データ取得
             DataTable dt = DataBaseLogic.DataBaseUnit(sbSql, paramId);
@@ -236,17 +236,17 @@ namespace ReportManagementSystem.DataBase
             StringBuilder sbSql = new StringBuilder();
 
             sbSql.AppendLine("SELECT    ");
-            sbSql.AppendLine("   レポート情報.課題種別 ");
-            sbSql.AppendLine("  ,レポート情報.提出期限日 ");
-            sbSql.AppendLine("  ,レポート情報.レポート概要 ");
-            sbSql.AppendLine("  ,レポート情報.レポート内容 ");
+            sbSql.AppendLine("   ReportInfo.LectureType ");
+            sbSql.AppendLine("  ,ReportInfo.SubmissionDeadline ");
+            sbSql.AppendLine("  ,ReportInfo.ReportSummary ");
+            sbSql.AppendLine("  ,ReportInfo.ReportContents ");
             sbSql.AppendLine("FROM ");
-            sbSql.AppendLine("  レポート情報");
+            sbSql.AppendLine("  ReportInfo");
             sbSql.AppendLine("WHERE ");
-            sbSql.AppendLine("  レポート情報.レポートID = @REPORTID  ");
+            sbSql.AppendLine("  ReportInfo.ReportId = @REPORTID  ");
             SqlParameter paramId = new SqlParameter("REPORTID", reportid);
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine(" レポート情報.削除フラグ　= 0 ");
+            sbSql.AppendLine(" ReportInfo.DeleteFlag　= 0 ");
 
             //データ取得
             DataTable dt = DataBaseLogic.DataBaseUnit(sbSql, paramId);

@@ -68,13 +68,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Image\グループ.png" />
-    <Content Include="Image\タイトル.png" />
-    <Content Include="Image\パスワード.png" />
-    <Content Include="Image\ユーザーID.png" />
-    <Content Include="Image\一覧リンク.png" />
-    <Content Include="Image\提出.png" />
-    <Content Include="Image\未提出.png" />
+    <Content Include="Image\Group.png" />
+    <Content Include="Image\Password.png" />
+    <Content Include="Image\Submit.png" />
+    <Content Include="Image\Summarylink.png" />
+    <Content Include="Image\Title.png" />
+    <Content Include="Image\Unsubmit.png" />
+    <Content Include="Image\Userid.png" />
     <Content Include="UI\InitializationForm.aspx" />
     <Content Include="UI\LoginForm.aspx" />
     <Content Include="UI\NewReportForm.aspx" />

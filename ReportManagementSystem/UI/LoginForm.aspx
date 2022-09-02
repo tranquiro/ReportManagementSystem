@@ -29,7 +29,7 @@
 <body>
     <form id="form1" runat="server">
         <div id ="title">
-            <asp:Image ID="Image1" runat="server" ImageUrl="~/Image/タイトル.png" />
+            <asp:Image ID="Image1" runat="server" ImageUrl="~/Image/Title.png" />
             <asp:Label ID="LblTitle" runat="server" Text="レポート管理システム" Font-Size="Larger"></asp:Label>
         </div>
 
@@ -38,7 +38,7 @@
         </p>
 
         <div class ="item">
-            <asp:Image ID="IcnUserId" runat="server" ImageUrl="~/Image/ユーザーID.png" Height="40px" Width="40px" />
+            <asp:Image ID="IcnUserId" runat="server" ImageUrl="~/Image/Userid.png" Height="40px" Width="40px" />
             <asp:TextBox ID="TxtUserId" Placeholder="ユーザーID（Email）" runat="server"></asp:TextBox>
         </div>
 
@@ -47,7 +47,7 @@
         </p>
 
         <div class ="item">
-            <asp:Image ID="IcnPassword" runat="server" ImageUrl="~/Image/パスワード.png" Height="40px" Width="40px" />
+            <asp:Image ID="IcnPassword" runat="server" ImageUrl="~/Image/Password.png" Height="40px" Width="40px" />
             <asp:TextBox ID="TxtPassword" TextMode="Password" Placeholder="パスワード" runat="server"></asp:TextBox>
         </div>
 

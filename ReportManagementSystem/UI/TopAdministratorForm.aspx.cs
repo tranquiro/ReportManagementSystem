@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace ReportManagementSystem.UI
 {
+    //管理者用Top画面
     public partial class TopAdministratorForm : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -19,7 +20,7 @@ namespace ReportManagementSystem.UI
             //ユーザーアイコン、ユーザーラベルの表示
             IcnUser.Visible = true;
             LblUserName.Visible = true;
-            LblUserName.Text = (string)Session["ユーザー名"] + "　様";
+            LblUserName.Text = (string)Session["UserName"] + "　様";
 
             //存在エラーラベルの非表示
             LblSearchErr.Visible = false;
@@ -27,10 +28,11 @@ namespace ReportManagementSystem.UI
             //レポート一覧グリッドビューの非表示
             GrdReportSummary.Visible = false;
 
+            //ポストバックでないとき（初回ページロード時）
             if (!Page.IsPostBack)
             {   
                 //大学リストの表示内容設定
-                DataTable univ_dt = DataBaseSql.GetUnibersityList((int)Session["ユーザーID"]);
+                DataTable univ_dt = DataBaseSql.GetUnibersityList((int)Session["UserId"]);
 
                 //大学リストの項目追加
                 ListItem univList = new ListItem((string)univ_dt.Rows[0][1], "1");
@@ -39,6 +41,7 @@ namespace ReportManagementSystem.UI
                 //講義リストの表示内容設定
                 DataTable lec_dt = DataBaseSql.GetLectureList((int)univ_dt.Rows[0][0]);
 
+                //行回数文ループｓ
                 for (int i = 0; i < lec_dt.Rows.Count; i++)
                 {
                     //講義リストの項目追加
@@ -63,7 +66,7 @@ namespace ReportManagementSystem.UI
         protected void BtnNewRegistration_Click(object sender, EventArgs e)
         {
             //登録フラグとして0をSessionに格納する
-            Session["登録フラグ"] = 0;
+            Session["RegistrationFlag"] = 0;
 
             //画面遷移
             Response.Redirect("NewReportForm.aspx");
@@ -92,31 +95,31 @@ namespace ReportManagementSystem.UI
             //レポート一覧グリッドビュー表示テーブル
             DataTable search_dt = new DataTable();
 
-            search_dt.Columns.Add("レポートID");
-            search_dt.Columns.Add("提出期限");
-            search_dt.Columns.Add("レポート概要");
-            search_dt.Columns.Add("課題種別");
-            search_dt.Columns.Add("提出一覧");
+            search_dt.Columns.Add("ReportId");
+            search_dt.Columns.Add("SubmissionDeadline");
+            search_dt.Columns.Add("ReportSummary");
+            search_dt.Columns.Add("LectureType");
+            search_dt.Columns.Add("SubmissionList");
 
             for (int i = 0; i < ReportData.Rows.Count; i++)
             {
                 DataRow row;
                 row = search_dt.NewRow();
 
-                row["レポートID"] = Convert.ToInt32(ReportData.Rows[i][0]);
-                row["提出期限"] = String.Format("{0:yyyy/MM/dd}", ReportData.Rows[i][1]);
-                row["レポート概要"] = ReportData.Rows[i][2];
+                row["ReportId"] = Convert.ToInt32(ReportData.Rows[i][0]);
+                row["SubmissionDeadline"] = String.Format("{0:yyyy/MM/dd}", ReportData.Rows[i][1]);
+                row["ReportSummary"] = ReportData.Rows[i][2];
 
                 if(Convert.ToInt32(ReportData.Rows[i][3]) == 0)
                 {
-                    row["課題種別"] = "個人";
+                    row["LectureType"] = "個人";
                 }
                 else
                 {
-                    row["課題種別"] = "グループ";
+                    row["LectureType"] = "グループ";
                 }
 
-                row["提出一覧"] = "提出一覧";
+                row["SubmissionList"] = "提出一覧";
                 
 
                 search_dt.Rows.Add(row);

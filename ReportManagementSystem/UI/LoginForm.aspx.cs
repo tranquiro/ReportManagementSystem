@@ -4,6 +4,7 @@ using ReportManagementSystem.DataBase;
 
 namespace ReportManagementSystem
 {
+    //ログイン画面
     public partial class LoginForm : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -16,14 +17,15 @@ namespace ReportManagementSystem
         //ログインボタン押下時
         protected void BtnLogin_Click(object sender, EventArgs e)
         {
-            bool errFlg = false;
+            //エラーカウント
+            int errCnt = 0;
 
             //ユーザーIDが未入力の場合
             if (TxtUserId.Text == "")
             {
                 LblUserIdErr.Visible = true;
                 LblUserIdErr.Text = "ユーザーIDが未入力です";
-                errFlg = true;
+                errCnt += 1;
             }
 
             //パスワードが未入力の場合
@@ -31,11 +33,11 @@ namespace ReportManagementSystem
             {
                 LblPasswordErr.Visible = true;
                 LblPasswordErr.Text = "パスワードが未入力です";
-                errFlg = true;
+                errCnt += 1;
             }
 
             //エラーチェック
-            if (errFlg)
+            if (errCnt >= 1)
             {
                 return;
             }
@@ -64,11 +66,11 @@ namespace ReportManagementSystem
             }
 
             //Sessionデータ保存
-            Session["ユーザーID"] = dt.Rows[0][0];
-            Session["ユーザー名"] = dt.Rows[0][1];
-            Session["管理者フラグ"] = dt.Rows[0][2];
-            Session["グループID"] = dt.Rows[0][4];
-            Session["グループ名"] = dt.Rows[0][5];
+            Session["UserId"] = dt.Rows[0][0];
+            Session["UserName"] = dt.Rows[0][1];
+            Session["AdaministratorFlag"] = dt.Rows[0][2];
+            Session["GroupId"] = dt.Rows[0][4];
+            Session["GroupName"] = dt.Rows[0][5];
 
 
             //画面遷移
