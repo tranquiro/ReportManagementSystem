@@ -43,15 +43,12 @@
 
                     <asp:TemplateField>
                         <ItemTemplate>
-                            <!-- 提出状態を画像表示 -->
                             &nbsp;<asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("SubmissionStatus") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <!-- 提出期限を表示 -->
                     <asp:BoundField DataField="SubmissionDeadline" HeaderText="提出期限" />
-
-                    <!-- レポート概要を表示（リンクにレポートIDを設定） -->
+                    
                     <asp:HyperLinkField DataNavigateUrlFields="ReportId" DataNavigateUrlFormatString="~/UI/ReportDetailForm.aspx?ReportId={0}" HeaderText="レポート概要" DataTextField="ReportSummary" />
                 </Columns>
                 <RowStyle HorizontalAlign ="Center" />

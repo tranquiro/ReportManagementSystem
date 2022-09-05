@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using System.Text;
 using System.Data;
 using ReportManagementSystem.DataBase;
+using ReportManagementSystem.CommonLogic;
 
 namespace ReportManagementSystem.UI
 {
@@ -71,51 +65,11 @@ namespace ReportManagementSystem.UI
                 return;
             }
 
-            //レポート提出状況表示テーブル
-            DataTable personal_dt = new DataTable();
-
-            //列追加
-            personal_dt.Columns.Add("ReportId");
-            personal_dt.Columns.Add("SubmissionStatus");
-            personal_dt.Columns.Add("SubmissionDeadline");
-            personal_dt.Columns.Add("ReportSummary");
-
-            //行回数文ループ
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                //行作成
-                DataRow row;
-                row = personal_dt.NewRow();
-
-                //レポートID列
-                row["ReportId"] = dt.Rows[i][0];
-
-                //提出レポートがない場合
-                if (dt.Rows[i][1].Equals(DBNull.Value))
-                {
-                    //提出状態列
-                    row["SubmissionStatus"] = "~/Image/Unsubmit.png";
-                }
-                else
-                {　//提出状態列
-                    row["SubmissionStatus"] = "~/Image/Submit.png";
-                }
-
-                //提出期限列
-                row["SubmissionDeadline"] = String.Format("{0:yyyy/MM/dd}", dt.Rows[i][2]);
-
-                //レポート概要列
-                row["ReportSummary"] = dt.Rows[i][3];
-
-                //行追加
-                personal_dt.Rows.Add(row);
-            }
-
-            personal_dt.AcceptChanges();
-
+            //表示データ作成
+            DataTable returndt = ReportViewCreate.GetDataTable(dt);
 
             //データバインド（画面表示）
-            this.GrdReport.DataSource = personal_dt;
+            this.GrdReport.DataSource = returndt;
             this.GrdReport.DataBind();
         }
 
@@ -148,51 +102,11 @@ namespace ReportManagementSystem.UI
                 return;
             }
 
-            //レポート提出状況表示テーブル
-            DataTable group_dt = new DataTable();
-
-            //列追加
-            group_dt.Columns.Add("ReportId");
-            group_dt.Columns.Add("SubmissionStatus");
-            group_dt.Columns.Add("SubmissionDeadline");
-            group_dt.Columns.Add("ReportSummary");
-
-            //行回数文ループ
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                //行作成
-                DataRow row;
-                row = group_dt.NewRow();
-
-                //レポートID列
-                row["ReportId"] = dt.Rows[i][0];
-
-                //提出レポートがない場合
-                if (dt.Rows[i][1].Equals(DBNull.Value))
-                {
-                    //提出状態列
-                    row["SubmissionStatus"] = "~/Image/Unsubmit.png";
-                }
-                else
-                {
-                    //提出状態列
-                    row["SubmissionStatus"] = "~/Image/Submit.png";
-                }
-
-                //提出期限列
-                row["SubmissionDeadline"] = String.Format("{0:yyyy/MM/dd}", dt.Rows[i][2]);
-
-                //レポート概要列
-                row["ReportSummary"] = dt.Rows[i][3];
-
-                //行追加
-                group_dt.Rows.Add(row);
-            }
-
-            group_dt.AcceptChanges();
+            //表示データ作成
+            DataTable returndt = ReportViewCreate.GetDataTable(dt);
 
             //データバインド（画面表示）
-            this.GrdReport.DataSource = group_dt;
+            this.GrdReport.DataSource = returndt;
             this.GrdReport.DataBind();
 
         }

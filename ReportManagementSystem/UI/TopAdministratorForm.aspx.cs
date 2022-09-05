@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
-using System.Text;
 using System.Data;
 using ReportManagementSystem.DataBase;
-using System.Windows.Forms;
+using ReportManagementSystem.CommonLogic;
 
 namespace ReportManagementSystem.UI
 {
@@ -92,40 +87,8 @@ namespace ReportManagementSystem.UI
             //レポート一覧グリッドビューの表示
             GrdReportSummary.Visible = true;
 
-            //レポート一覧グリッドビュー表示テーブル
-            DataTable search_dt = new DataTable();
-
-            search_dt.Columns.Add("ReportId");
-            search_dt.Columns.Add("SubmissionDeadline");
-            search_dt.Columns.Add("ReportSummary");
-            search_dt.Columns.Add("LectureType");
-            search_dt.Columns.Add("SubmissionList");
-
-            for (int i = 0; i < ReportData.Rows.Count; i++)
-            {
-                DataRow row;
-                row = search_dt.NewRow();
-
-                row["ReportId"] = Convert.ToInt32(ReportData.Rows[i][0]);
-                row["SubmissionDeadline"] = String.Format("{0:yyyy/MM/dd}", ReportData.Rows[i][1]);
-                row["ReportSummary"] = ReportData.Rows[i][2];
-
-                if(Convert.ToInt32(ReportData.Rows[i][3]) == 0)
-                {
-                    row["LectureType"] = "個人";
-                }
-                else
-                {
-                    row["LectureType"] = "グループ";
-                }
-
-                row["SubmissionList"] = "提出一覧";
-                
-
-                search_dt.Rows.Add(row);
-            }
-
-            search_dt.AcceptChanges();
+            //検索講義レポート表示作成
+            DataTable search_dt = ReportViewCreate.GetSearchtable(ReportData);
 
             //データバインド（画面表示）
             this.GrdReportSummary.DataSource = search_dt;

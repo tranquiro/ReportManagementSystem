@@ -74,6 +74,7 @@ namespace ReportManagementSystem
 
 
             //画面遷移
+            //管理者フラグが0の場合
             if(Convert.ToInt32(dt.Rows[0][2]) == 0)
             {
                 //学生用画面

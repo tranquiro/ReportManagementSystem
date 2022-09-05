@@ -46,19 +46,14 @@
         <!-- ペーシング20行 -->
         <asp:GridView ID="GrdReportSummary" runat="server" AutoGenerateColumns="False" AllowPaging ="True" PageSize ="20" CellPadding="4">
             <Columns>
-                <!-- レポートIDを表示 -->
                 <asp:BoundField DataField="ReportId" HeaderText="レポートID" Visible="False" />
 
-                <!-- 提出期限を表示 -->
                 <asp:BoundField DataField="SubmissionDeadline" HeaderText="提出期限" />
 
-                <!-- レポート概要を表示（リンクにレポートIDを設定 -->
                 <asp:HyperLinkField DataNavigateUrlFields="ReportId" DataNavigateUrlFormatString="~/UI/ReportDetailForm.aspx?ReportId={0}" DataTextField="ReportSummary" HeaderText="レポート概要" />
 
-                <!-- 課題種別を表示 -->
                 <asp:BoundField DataField="LectureType" HeaderText="課題種別" />
 
-                <!-- 提出一覧を表示（リンクいレポートIDを設定 -->
                 <asp:HyperLinkField DataNavigateUrlFields="ReportId" DataNavigateUrlFormatString="~/UI/SubmissionsForm.aspx?ReportId={0}" DataTextField="SubmissionList" HeaderText="提出一覧" />
             </Columns>
             <RowStyle HorizontalAlign ="Center" />
