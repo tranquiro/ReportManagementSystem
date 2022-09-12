@@ -38,7 +38,7 @@
         </div>
         <div>
             <!-- ペーシング20行 -->
-            <asp:GridView ID="GrdReport" runat="server" AutoGenerateColumns="False" Height="100px" Width="473px" AllowPaging="true" PageSize="20" CellPadding="4">
+            <asp:GridView ID="GrdReport" runat="server" AutoGenerateColumns="False" Height="100px" Width="473px" AllowPaging="true" PageSize="20" CellPadding="4" OnPageIndexChanging="GrdReport_PageIndexChanging">
                 <Columns>
 
                     <asp:TemplateField>

@@ -13,7 +13,7 @@ namespace ReportManagementSystem.UI
             //ユーザーアイコン・ユーザーラベルの表示
             IcnUser.Visible = true;
             LblUserName.Visible = true;
-            LblUserName.Text = (string)Session["USERNAME"] + "　様";
+            LblUserName.Text = (string)Session["UserName"];
 
             //グループアイコン・グループラベルの非表示
             IcnGroup.Visible = false;
@@ -42,7 +42,7 @@ namespace ReportManagementSystem.UI
             //ユーザーアイコン・ユーザーラベルの表示
             IcnUser.Visible = true;
             LblUserName.Visible = true;
-            LblUserName.Text = (string)Session["UserName"] + "　様";
+            LblUserName.Text = (string)Session["UserName"];
 
             //グループアイコン・グループラベルの非表示
             IcnGroup.Visible = false;
@@ -50,9 +50,6 @@ namespace ReportManagementSystem.UI
 
             //存在エラーラベルの非表示
             LblExistErr.Visible = false;
-
-            //レポート一覧グリッドビューの表示
-            GrdReport.Visible = true;
 
             //レポート提出状況のチェック
             DataTable dt = DataBaseSql.GetPersonalReport((int)Session["UserId"]);
@@ -62,14 +59,21 @@ namespace ReportManagementSystem.UI
             {
                 //存在エラーラベル表示
                 LblExistErr.Visible = true;
+                GrdReport.Visible = false;
                 return;
             }
+
+            //レポート一覧グリッドビューの表示
+            GrdReport.Visible = true;
 
             //表示データ作成
             DataTable returndt = ReportViewCreate.GetDataTable(dt);
 
+            // Session["data"] に、DataTable オブジェクトを格納する。
+            Session["data"] = returndt;
+
             //データバインド（画面表示）
-            this.GrdReport.DataSource = returndt;
+            this.GrdReport.DataSource = Session["data"];
             this.GrdReport.DataBind();
         }
 
@@ -83,13 +87,11 @@ namespace ReportManagementSystem.UI
             //グループアイコン・グループラベルの表示
             IcnGroup.Visible = true;
             LblGroupName.Visible = true;
-            LblGroupName.Text = (string)Session["GroupName"] + "グループ";
+            LblGroupName.Text = (string)Session["GroupName"];
 
             //存在エラーラベルの非表示
             LblExistErr.Visible = false;
-
-            //レポート一覧グリッドビューの表示
-            GrdReport.Visible = true;
+            GrdReport.Visible = false;
 
             //レポート提出状況のチェック
             DataTable dt = DataBaseSql.GetGroupReport((int)Session["GroupId"]);
@@ -102,13 +104,30 @@ namespace ReportManagementSystem.UI
                 return;
             }
 
+            //レポート一覧グリッドビューの表示
+            GrdReport.Visible = true;
+
             //表示データ作成
             DataTable returndt = ReportViewCreate.GetDataTable(dt);
 
+            // Session["data"] に、DataTable オブジェクトを格納する。
+            Session["data"] = returndt;
+
             //データバインド（画面表示）
-            this.GrdReport.DataSource = returndt;
+            this.GrdReport.DataSource = Session["data"];
             this.GrdReport.DataBind();
 
         }
+
+        protected void GrdReport_PageIndexChanging(object sender, System.Web.UI.WebControls.GridViewPageEventArgs e)
+        {
+            this.GrdReport.PageIndex = e.NewPageIndex;
+            this.GrdReport.DataSource = Session["data"];
+            GrdReport.Visible = true;
+
+            this.GrdReport.DataBind();
+
+        }
+
     }
 }

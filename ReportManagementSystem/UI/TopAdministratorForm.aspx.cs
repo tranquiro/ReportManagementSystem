@@ -15,7 +15,7 @@ namespace ReportManagementSystem.UI
             //ユーザーアイコン、ユーザーラベルの表示
             IcnUser.Visible = true;
             LblUserName.Visible = true;
-            LblUserName.Text = (string)Session["UserName"] + "　様";
+            LblUserName.Text = (string)Session["UserName"];
 
             //存在エラーラベルの非表示
             LblSearchErr.Visible = false;
