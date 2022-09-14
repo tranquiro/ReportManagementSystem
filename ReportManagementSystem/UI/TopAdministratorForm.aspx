@@ -44,7 +44,7 @@
         </div>
 
         <!-- ペーシング20行 -->
-        <asp:GridView ID="GrdReportSummary" runat="server" AutoGenerateColumns="False" AllowPaging ="True" PageSize ="20" CellPadding="4">
+        <asp:GridView ID="GrdReportSummary" runat="server" AutoGenerateColumns="False" AllowPaging ="True" PageSize ="20" CellPadding="4" OnPageIndexChanging="GrdReportSummary_PageIndexChanging">
             <Columns>
                 <asp:BoundField DataField="ReportId" HeaderText="レポートID" Visible="False" />
 

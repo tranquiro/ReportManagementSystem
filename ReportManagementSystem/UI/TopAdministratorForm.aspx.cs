@@ -29,21 +29,25 @@ namespace ReportManagementSystem.UI
                 //大学リストの表示内容設定
                 DataTable univ_dt = DataBaseSql.GetUnibersityList((int)Session["UserId"]);
 
-                //大学リストの項目追加
-                ListItem univList = new ListItem((string)univ_dt.Rows[0][1], "1");
-                DdlUniv.Items.Add(univList);
-
-                //講義リストの表示内容設定
-                DataTable lec_dt = DataBaseSql.GetLectureList((int)univ_dt.Rows[0][0]);
-
-                //行回数文ループｓ
-                for (int i = 0; i < lec_dt.Rows.Count; i++)
+                //大学情報が削除されてないとき
+                if(univ_dt.Rows.Count >= 1)
                 {
-                    //講義リストの項目追加
-                    ListItem lecList = new ListItem((string)lec_dt.Rows[i][1], Convert.ToString(lec_dt.Rows[i][0]));
-                    DdlLec.Items.Add(lecList);
-                }
+                    //大学リストの項目追加
+                    ListItem univList = new ListItem((string)univ_dt.Rows[0][1], "1");
+                    DdlUniv.Items.Add(univList);
 
+                    //講義リストの表示内容設定
+                    DataTable lec_dt = DataBaseSql.GetLectureList((int)univ_dt.Rows[0][0]);
+
+                    //行回数文ループｓ
+                    for (int i = 0; i < lec_dt.Rows.Count; i++)
+                    {
+                        //講義リストの項目追加
+                        ListItem lecList = new ListItem((string)lec_dt.Rows[i][1], Convert.ToString(lec_dt.Rows[i][0]));
+                        DdlLec.Items.Add(lecList);
+                    }
+
+                }
             }
 
         }
@@ -73,28 +77,46 @@ namespace ReportManagementSystem.UI
             //レポート一覧グリッドビューの非表示
             GrdReportSummary.Visible = false;
 
-            //データの抽出
-            DataTable ReportData = DataBaseSql.GetReportData(Convert.ToInt32(DdlLec.SelectedValue));
-
-            //データの存在チェック
-            if(ReportData.Rows.Count == 0)
+            if(DdlLec.SelectedValue != "")
             {
-                //検索エラーラベルの表示
-                LblSearchErr.Visible = true;
+                //データの抽出
+                DataTable ReportData = DataBaseSql.GetReportData(Convert.ToInt32(DdlLec.SelectedValue));
+
+                //データの存在チェック
+                if (ReportData.Rows.Count == 0)
+                {
+                    //検索エラーラベルの表示
+                    LblSearchErr.Visible = true;
+                    return;
+                }
+
+                //レポート一覧グリッドビューの表示
+                GrdReportSummary.Visible = true;
+
+                //検索講義レポート表示作成
+                DataTable search_dt = ReportViewCreate.GetSearchtable(ReportData);
+
+                // Session["data"] に、DataTable オブジェクトを格納する。
+                Session["data"] = search_dt;
+
+                //データバインド（画面表示）
+                this.GrdReportSummary.DataSource = Session["data"];
+                this.GrdReportSummary.DataBind();
                 return;
             }
 
-            //レポート一覧グリッドビューの表示
-            GrdReportSummary.Visible = true;
-
-            //検索講義レポート表示作成
-            DataTable search_dt = ReportViewCreate.GetSearchtable(ReportData);
-
-            //データバインド（画面表示）
-            this.GrdReportSummary.DataSource = search_dt;
-            this.GrdReportSummary.DataBind();
+            //検索エラーラベルの表示
+            LblSearchErr.Visible = true;
 
         }
 
+        protected void GrdReportSummary_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            this.GrdReportSummary.PageIndex = e.NewPageIndex;
+            this.GrdReportSummary.DataSource = Session["data"];
+            GrdReportSummary.Visible = true;
+
+            this.GrdReportSummary.DataBind();
+        }
     }
 }

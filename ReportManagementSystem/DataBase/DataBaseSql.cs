@@ -51,7 +51,7 @@ namespace ReportManagementSystem.DataBase
             sbSql.AppendLine("SELECT    ");
             sbSql.AppendLine("   ReportInfo.ReportId ");
             sbSql.AppendLine("  ,SubmissionInfo.CreateDatetime ");
-            sbSql.AppendLine("  ,ReportInfo.SubmissionDeadline ");
+            sbSql.AppendLine("  ,dateadd(day,-1,ReportInfo.SubmissionDeadline) ");
             sbSql.AppendLine("  ,ReportInfo.ReportSummary ");
             sbSql.AppendLine("FROM ");
             sbSql.AppendLine("  ReportInfo");
@@ -70,12 +70,14 @@ namespace ReportManagementSystem.DataBase
             sbSql.AppendLine("AND ");
             sbSql.AppendLine("UserInfo.UserId= SubmissionInfo.UserId");
             sbSql.AppendLine("WHERE ");
-            sbSql.AppendLine("  ReportInfo.SubmissionDeadline　>= GetDate() ");
+            sbSql.AppendLine("  ReportInfo.SubmissionDeadline　> GetDate() ");
             sbSql.AppendLine("AND ");
             sbSql.AppendLine("  ReportInfo.LectureType = 0 ");
             sbSql.AppendLine("AND ");
             sbSql.AppendLine("  AttendInfo.UserId = @USERID  ");
             SqlParameter paramId = new SqlParameter("USERID", userid);
+            sbSql.AppendLine("AND ");
+            sbSql.AppendLine("  AttendInfo.DeleteFlag　= 0 ");
             sbSql.AppendLine("AND ");
             sbSql.AppendLine("  ReportInfo.DeleteFlag　= 0 ");
 
@@ -111,15 +113,21 @@ namespace ReportManagementSystem.DataBase
             sbSql.AppendLine("       INNER JOIN AttendInfo");
             sbSql.AppendLine("       ON ");
             sbSql.AppendLine("           UserInfo.UserId= AttendInfo.UserId");
-            sbSql.AppendLine("WHERE ");
-            sbSql.AppendLine("  UserInfo.AdministratorFlag = 0 ");
-            sbSql.AppendLine("AND ");
-            sbSql.AppendLine("  UserInfo.GroupId =  @GROUPID ");
+            sbSql.AppendLine("       WHERE ");
+            sbSql.AppendLine("           UserInfo.AdministratorFlag = 0 ");
+            sbSql.AppendLine("       AND ");
+            sbSql.AppendLine("           UserInfo.GroupId =  @GROUPID ");
             SqlParameter paramId = new SqlParameter("GROUPID", groupid);
-            sbSql.AppendLine("GROUP BY ");
-            sbSql.AppendLine("  AttendInfo.LectureId) ");
+            sbSql.AppendLine("       AND ");
+            sbSql.AppendLine("           AttendInfo.DeleteFlag = 0 ");
+            sbSql.AppendLine("       GROUP BY ");
+            sbSql.AppendLine("           AttendInfo.LectureId) ");
             sbSql.AppendLine("AND ");
-            sbSql.AppendLine("  ReportInfo.LectureType = 1 ");
+            sbSql.AppendLine("   ReportInfo.SubmissionDeadline > GetDate() ");
+            sbSql.AppendLine("AND ");
+            sbSql.AppendLine("   ReportInfo.LectureType = 1 ");
+            sbSql.AppendLine("AND ");
+            sbSql.AppendLine("   ReportInfo.DeleteFlag = 0 ");
             sbSql.AppendLine("GROUP BY ");
             sbSql.AppendLine("   ReportInfo.ReportId ");
             sbSql.AppendLine("  ,SubmissionInfo.CreateDatetime ");
@@ -129,7 +137,7 @@ namespace ReportManagementSystem.DataBase
             sbSql.AppendLine("SELECT    ");
             sbSql.AppendLine("   a1.ReportId ");
             sbSql.AppendLine("  ,a2.CreateNewDatetime ");
-            sbSql.AppendLine("  ,a1.SubmissionDeadline ");
+            sbSql.AppendLine("  ,dateadd(day,-1,a1.SubmissionDeadline) ");
             sbSql.AppendLine("  ,a1.ReportSummary ");
             sbSql.AppendLine("FROM ");
             sbSql.AppendLine("  SubmitReport as a1");
@@ -212,7 +220,7 @@ namespace ReportManagementSystem.DataBase
 
             sbSql.AppendLine("SELECT    ");
             sbSql.AppendLine("   ReportInfo.ReportId ");
-            sbSql.AppendLine("  ,ReportInfo.SubmissionDeadline ");
+            sbSql.AppendLine("  ,dateadd(day,-1,ReportInfo.SubmissionDeadline) ");
             sbSql.AppendLine("  ,ReportInfo.ReportSummary ");
             sbSql.AppendLine("  ,ReportInfo.LectureType ");
             sbSql.AppendLine("FROM ");
@@ -220,6 +228,8 @@ namespace ReportManagementSystem.DataBase
             sbSql.AppendLine("WHERE ");
             sbSql.AppendLine("  ReportInfo.LectureId = @LECID  ");
             SqlParameter paramId = new SqlParameter("LECID", lecid);
+            sbSql.AppendLine("AND ");
+            sbSql.AppendLine(" ReportInfo.SubmissionDeadline　> GetDate() ");
             sbSql.AppendLine("AND ");
             sbSql.AppendLine(" ReportInfo.DeleteFlag　= 0 ");
 
